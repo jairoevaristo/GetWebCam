@@ -1,0 +1,39 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  min-height: 100vh; 
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: transparent;
+}
+
+body, #camera {
+  -webkit-app-region: drag;
+}
+
+#camera {
+  width: 280px;
+  height: 280px;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+#camera #video {
+  height: auto;
+  object-fit: fill;
+  box-shadow: 1px 7px 14px 0px rgba(0, 0, 0, .6);
+}
