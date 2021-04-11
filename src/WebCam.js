@@ -1,11 +1,7 @@
 const video = document.querySelector('#video');
 
-const App = {
-
-  init() {
-    window.onload = App.getStrem
-  },
-
+const WebCam = {
+  
   getStrem() {
     navigator.mediaDevices.getUserMedia({ video: true, audio: false })
     .then(strem => {
@@ -16,4 +12,4 @@ const App = {
   }
 }
 
-export { App };
+export { WebCam };
