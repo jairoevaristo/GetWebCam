@@ -16,7 +16,7 @@ body {
   background-color: transparent;
 }
 
-body, #camera {
+body {
   -webkit-app-region: drag;
 }
 

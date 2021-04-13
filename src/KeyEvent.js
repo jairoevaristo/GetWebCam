@@ -1,30 +1,27 @@
+const { ipcRenderer } = require('electron');
 const camera = document.querySelector('#camera');
 
 const KeyEvent = {
-  dimensions: {},
+  state: 1.1,
+
+  init() {
+    KeyEvent.getKeyboard()
+  },
 
   getKeyboard() {
     document.addEventListener("keypress", event => {
-      if (event.key === 'a') {
-        KeyEvent.getDimensios(KeyEvent.dimensions);
+      if (event.key === "=" && KeyEvent.state < 2.4) {
+          camera.style.transform = `scale(${KeyEvent.state += 0.1})`;
 
-        camera.style.width = (KeyEvent.dimensions.width + 10) + "px";
-        camera.style.height = (KeyEvent.dimensions.height + 10) + "px";
+          ipcRenderer.send('message-size', KeyEvent.state)
       }
 
-      if (event.key === 'b') {
-        KeyEvent.getDimensios(KeyEvent.dimensions);
-
-        camera.style.width = (KeyEvent.dimensions.width - 10) + "px";
-        camera.style.height = (KeyEvent.dimensions.height - 10) + "px";
+      if (event.key === "-" && KeyEvent.state > 1.1) {
+        camera.style.transform = `scale(${KeyEvent.state -= 0.1})`;
       }
-    })
+    });
   },
-
-  getDimensios({ width, height }) {
-    KeyEvent.dimensions.width = camera.offsetWidth
-    KeyEvent.dimensions.height = camera.offsetHeight
-  }
 };
 
 export { KeyEvent };
+

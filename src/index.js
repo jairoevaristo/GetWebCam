@@ -3,9 +3,9 @@ import { KeyEvent } from './KeyEvent.js';
 
 const App = {
   init() {
-    WebCam.getStrem();
-    KeyEvent.getKeyboard()
+    WebCam.init();
+    KeyEvent.init();
   }
 }
 
-export { App };
+App.init()

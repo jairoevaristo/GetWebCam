@@ -2,6 +2,10 @@ const video = document.querySelector('#video');
 
 const WebCam = {
   
+  init() {
+    WebCam.getStrem()
+  },
+
   getStrem() {
     navigator.mediaDevices.getUserMedia({ video: true, audio: false })
     .then(strem => {
