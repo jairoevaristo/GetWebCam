@@ -13,11 +13,13 @@ const KeyEvent = {
       if (event.key === "=" && KeyEvent.state < 2.4) {
           camera.style.transform = `scale(${KeyEvent.state += 0.1})`;
 
-          ipcRenderer.send('message-size', KeyEvent.state)
+          ipcRenderer.send('message-size', true);
       }
 
       if (event.key === "-" && KeyEvent.state > 1.1) {
         camera.style.transform = `scale(${KeyEvent.state -= 0.1})`;
+
+        ipcRenderer.send('message-size', false)
       }
     });
   },

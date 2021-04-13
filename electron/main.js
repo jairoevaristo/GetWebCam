@@ -2,19 +2,34 @@ const { app, BrowserWindow, ipcMain, screen } = require('electron');
 
 let win, customSize = 200, bigPosition;
 
-function updateWindow(win) {
+const updateWindow = {
+  "zoomin": () => {
     const { x, y } = win.getBounds();
-    const newDimesionWindow = customSize * 2.4;
 
+    const newDimesionWindow = customSize * 2.4;
+    
     bigPosition = {
       x,
       y,
       width: newDimesionWindow,
       height: newDimesionWindow
     };
+  
+    win.setBounds(bigPosition, true)  
+  },
 
-    win.setBounds(bigPosition, true)
+  "zoomup": () => {
+    const { width, height } = win.getBounds();
+    let newWidth, newHeight;
+
+    if (width > 200 && height > 200) {
+      newWidth = width - 20
+      newHeight = height - 20
+    }
+    
+    win.setSize(newWidth, newHeight);
   }
+};
 
 function createWindow() {
   win = new BrowserWindow({
@@ -53,6 +68,8 @@ app.on('window-all-closed', () => {
   }
 });
 
-ipcMain.on('message-size', (event, arg) => {
-  updateWindow(win);
+ipcMain.on('message-size', (event, arg) => { 
+  const args = arg ? 'zoomin' : 'zoomup' ;
+  updateWindow[args]();
+  console.log(args)
 });
