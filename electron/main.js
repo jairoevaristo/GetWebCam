@@ -1,4 +1,5 @@
 const { app, BrowserWindow, ipcMain, screen } = require('electron');
+const { createTray } = require('./Tray');
 
 let win, customSize = 200, bigPosition;
 
@@ -36,6 +37,7 @@ function createWindow() {
     width: customSize,
     height: customSize,
     frame: false,
+    show: false,
     transparent: true,
     alwaysOnTop: true,
     webPreferences: {
@@ -54,13 +56,10 @@ function createWindow() {
   });
 }
 
-app.whenReady().then(createWindow);
+app.whenReady()
+.then(createTray)
+.then(createWindow)
 
-app.on('active', () => {
-  if (BrowserWindow.getAllWindows.length === 0) {
-    createWindow();
-  }
-});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
