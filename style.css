@@ -20,6 +20,21 @@ body {
   -webkit-app-region: drag;
 }
 
+#loading {
+  animation: is-rotating 1s infinite;
+  border: 6px solid rgba(0, 0, 0, 0.2);
+  border-radius: 50%;
+  border-top-color: #0c2461;
+  height: 100px;
+  width: 100px;
+}
+
+@keyframes is-rotating {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
 #camera {
   width: 200px;
   height: 200px;

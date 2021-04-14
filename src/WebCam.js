@@ -1,6 +1,6 @@
-const video = document.querySelector('#video');
 const camera = document.querySelector('#camera');
-const loading = document.querySelector('h1');
+const video = document.querySelector('#video');
+const loading = document.querySelector('#loading');
 
 const WebCam = {
   state: true,
@@ -25,9 +25,9 @@ const WebCam = {
 
   loadCamera() {
     if (WebCam.state) {
-      video.style.display = "none"
+      camera.style.display = "none"
     } else {
-      video.style.display = "block"
+      camera.style.display = "flex"
       loading.style.display = "none"
     }
   }
