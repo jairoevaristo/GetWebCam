@@ -37,7 +37,7 @@ function createWindow() {
     width: customSize,
     height: customSize,
     frame: false,
-    show: false,
+    // show: false,
     transparent: true,
     alwaysOnTop: true,
     webPreferences: {
