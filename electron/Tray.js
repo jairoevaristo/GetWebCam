@@ -1,12 +1,9 @@
 const { Tray } = require('electron');
 const { resolve } = require('path');
 
-let tray;
-
 function createTray() {
-  tray = new Tray(resolve(__dirname, '../', 'assets', 'camera.png'));
-
+  const tray = new Tray(resolve(__dirname, '../', 'assets', 'cameraIcon.png'));
   return tray;
 };
 
-module.exports = { createTray };
+module.exports = createTray();

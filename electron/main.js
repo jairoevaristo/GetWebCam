@@ -1,65 +1,17 @@
-const { app, BrowserWindow, ipcMain, screen } = require('electron');
-const { createTray } = require('./Tray');
+const { app, ipcMain } = require('electron');
+const controllerWindow = require('./WindowController');
 
-let win, customSize = 200, bigPosition;
+let win, tray;
 
-const updateWindow = {
-  "zoomin": () => {
-    const { x, y } = win.getBounds();
+function App() {
+  win = require('./Window');
+  tray = require('./Tray');
+  const { toggle } = controllerWindow(win);
 
-    const newDimesionWindow = customSize * 2.4;
-    
-    bigPosition = {
-      x,
-      y,
-      width: newDimesionWindow,
-      height: newDimesionWindow
-    };
-  
-    win.setBounds(bigPosition, true)  
-  },
-
-  "zoomup": () => {
-    const { width, height } = win.getBounds();
-    let newWidth, newHeight;
-
-    if (width > 200 && height > 200) {
-      newWidth = width - 20
-      newHeight = height - 20
-    }
-    
-    win.setSize(newWidth, newHeight);
-  }
-};
-
-function createWindow() {
-  win = new BrowserWindow({
-    width: customSize,
-    height: customSize,
-    frame: false,
-    // show: false,
-    transparent: true,
-    alwaysOnTop: true,
-    webPreferences: {
-      contextIsolation: false,
-      nodeIntegration: true,
-    }
-});
-
-  win.loadFile('index.html');
-  
-  win.on('will-move', (event, rect) => {
-    const { width, height } = screen.getPrimaryDisplay().workAreaSize;
-
-    rect.height + rect.y > height && event.preventDefault();
-    (rect.width + rect.x > width || rect.x  < 0) && event.preventDefault();
-  });
+  tray.on('click', toggle);
 }
 
-app.whenReady()
-.then(createTray)
-.then(createWindow)
-
+app.whenReady().then(App);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -69,6 +21,7 @@ app.on('window-all-closed', () => {
 
 ipcMain.on('message-size', (event, arg) => { 
   const args = arg ? 'zoomin' : 'zoomup' ;
-  updateWindow[args]();
-  console.log(args)
+  const { controllerSize } = controllerWindow(win, args);
+
+  controllerSize(args);
 });
